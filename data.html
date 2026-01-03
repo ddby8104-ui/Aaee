@@ -86,7 +86,7 @@
   <label>الاسم بالكامل *</label>
   <input id="fullName" required>
 
-  <label>رقم الهوية (15 رقمًا) *</label>
+  <label>رقم الهوية *</label>
   <input id="idNumber" type="text" inputmode="numeric" maxlength="15" required
     oninput="this.value=this.value.replace(/\D/g,'').slice(0,15)">
 
@@ -128,7 +128,7 @@
   <label>قيمة رسوم السداد (درهم إماراتي) *</label>
   <input id="amount" type="number" min="1" step="0.01" required>
 
-  <label>رقم المفوتر (6 أرقام فقط) *</label>
+  <label>رقم المفوتر *</label>
   <input id="biller" type="text" inputmode="numeric" maxlength="6" required
     oninput="this.value=this.value.replace(/\D/g,'').slice(0,6)">
 
